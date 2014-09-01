@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-usage="$(basename "$0") -s SECONDS -m MINUTES -h HOURS -d DAYS -p GREP_PATTERN [-d]\n
+usage="$(basename "$0") -s SECONDS -m MINUTES -h HOURS -d DAYS -p GREP_PATTERN [-t]\n
 
 arguments:\n
     -s delete snapshots older than SECONDS\n
