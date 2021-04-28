@@ -79,6 +79,8 @@ elif [[ "$unamestr" == 'OpenBSD' ]]; then
   platform='bsd'
 elif [[ "$unamestr" == 'Darwin' ]]; then
   platform='bsd'
+elif [[ "$unamestr" == 'SunOS' ]]; then
+  platform='solaris'
 else
   echo -e "unknown platform $unamestr 1>&2"
   exit 1
@@ -92,7 +94,9 @@ if [ $compare_seconds -lt 1 ]; then
 fi
 
 if [[ "$platform" == 'linux' ]]; then
-compare_timestamp=`date --date="-$(echo $compare_seconds) seconds" +"%s"`
+  compare_timestamp=`date --date="-$(echo $compare_seconds) seconds" +"%s"`
+elif [[ "$platform" == 'solaris' ]]; then
+  compare_timestamp=`gdate --date="-$(echo $compare_seconds) seconds" +"%s"`
 else
 compare_timestamp=`date -j -v-$(echo $compare_seconds)S +"%s"`
 fi
@@ -116,6 +120,8 @@ for line in $snapshots; do
 
   if [[ "$platform" == 'linux' ]]; then
     creation_date_timestamp=`date --date="$creation_date" "+%s"`
+  elif [[ "$platform" == 'solaris' ]]; then
+    creation_date_timestamp=`gdate --date="$creation_date" "+%s"`
   else
     creation_date_timestamp=`date -j -f "%a %b %d %H:%M %Y" "$creation_date" "+%s"`
   fi
